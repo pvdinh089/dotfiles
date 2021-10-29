@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Hinh nen co dinh
+feh --bg-fill ~/.xmonad/wallpaper/img/arch.jpg
+
+# Hinh nen ngau nhien
+#feh --bg-fill --no-fehbg --randomize ~/.xmonad/wallpaper/img/* 
