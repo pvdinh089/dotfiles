@@ -77,7 +77,7 @@ myEmacs :: String
 myEmacs = "emacsclient -c -a 'emacs' " -- Makes emacs keybindings easier to type
 
 myEditor :: String
-myEditor = "emacsclient -c -a 'emacs' " -- Sets emacs as editor
+myEditor = "code" -- Sets Visual Studio Code as editor
 -- myEditor = myTerminal ++ " -e vim "    -- Sets vim as editor
 
 myBorderWidth :: Dimension
@@ -106,7 +106,7 @@ myStartupHook = do
   -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
   -- spawnOnce "feh --randomize --bg-fill ~/wallpapers/*"  -- feh set random wallpaper
   -- spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
-  setWMName "Xmonad"
+  setWMName "xmonad"
 
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer =
@@ -335,7 +335,7 @@ myLayoutHook =
         ||| tallAccordion
         ||| wideAccordion
 
--- myWorkspaces = [" 1 --", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
+-- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 myWorkspaces = [" dev ", " www ", " sys ", " doc ", " vbox ", " chat ", " mus ", " vid ", " gfx "]
 
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1 ..] -- (,) == \x y -> (x,y)
@@ -363,12 +363,12 @@ myManageHook =
       className =? "toolbar" --> doFloat,
       className =? "Yad" --> doCenterFloat,
       title =? "Oracle VM VirtualBox Manager" --> doFloat,
-      title =? "Mozilla Firefox" --> doShift (myWorkspaces !! 1),
-      className =? "Brave-browser" --> doShift (myWorkspaces !! 1),
-      className =? "mpv" --> doShift (myWorkspaces !! 7),
-      className =? "Gimp" --> doShift (myWorkspaces !! 8),
-      className =? "VirtualBox Manager" --> doShift (myWorkspaces !! 4),
-      (className =? "firefox" <&&> resource =? "Dialog") --> doFloat, -- Float Firefox Dialog
+      --title =? "Mozilla Firefox" --> doShift (myWorkspaces !! 1),
+      --className =? "Brave-browser" --> doShift (myWorkspaces !! 1),
+      -- className =? "mpv" --> doShift (myWorkspaces !! 7),
+      -- className =? "Gimp" --> doShift (myWorkspaces !! 8),
+      -- className =? "VirtualBox Manager" --> doShift (myWorkspaces !! 4),
+      --(className =? "firefox" <&&> resource =? "Dialog") --> doFloat, -- Float Firefox Dialog
       isFullscreen --> doFullFloat
     ]
     <+> namedScratchpadManageHook myScratchPads
@@ -520,11 +520,13 @@ main :: IO ()
 main = do
   -- Launching three instances of xmobar on their monitors.
   xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc"
+  xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc"
+  xmproc2 <- spawnPipe "xmobar -x 2 $HOME/.config/xmobar/xmobarrc"
   -- the xmonad, ya know...what the WM is named after!
   xmonad $
     ewmh
       def
-        { --manageHook         = myManageHook <+> manageDocks,
+        { manageHook = myManageHook <+> manageDocks,
           handleEventHook = docksEventHook,
           -- Uncomment this line to enable fullscreen support on things like YouTube/Netflix.
           -- This works perfect on SINGLE monitor systems. On multi-monitor systems,
