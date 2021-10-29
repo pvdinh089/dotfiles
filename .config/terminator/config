@@ -3,9 +3,9 @@
   title_transmit_bg_color = "#282a2e"
   title_inactive_fg_color = "#c5c8c6"
   title_inactive_bg_color = "#373b41"
-
+[keybindings]
 [profiles]
-  [[default]]
+ [[default]]
 	foreground_color = "#c5c8c6"
 	background_color = "#1d1f21"
 	background_darkness = 0.71
@@ -18,11 +18,10 @@
 	use_system_font= False
 [layouts]
   [[default]]
-    [[[child1]]]
-      type = Terminal
-      parent = window0
-      profile = default
     [[[window0]]]
       type = Window
       parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
 [plugins]
