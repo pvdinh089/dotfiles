@@ -1,6 +1,6 @@
 #!/bin/bash
 # Cài đặt các gói của xmonad
-sudo pacman -S --noconfirm xorg ligthdm lightdm-gtk-greeter xmonad xmonad-contrib xmobar dmenu picom feh
+sudo pacman -S --noconfirm xorg ligthdm lightdm-gtk-greeter xmonad xmonad-contrib xmobar dmenu picom feh otf-font-awesome
 
 # Kích hoạt dịch vụ quản lý Desktop
 sudo systemctl enable lightdm
