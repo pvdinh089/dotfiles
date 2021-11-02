@@ -547,9 +547,9 @@ main = do
                 xmobarPP
                   { -- the following variables beginning with 'pp' are settings for xmobar.
                     ppOutput = \x ->
-                      hPutStrLn xmproc0 x -- xmobar on monitor 1
-                        >> hPutStrLn xmproc1 x -- xmobar on monitor 2
-                        >> hPutStrLn xmproc2 x, -- xmobar on monitor 3
+                      hPutStrLn xmproc0 x, -- xmobar on monitor 1
+                      -- >> hPutStrLn xmproc1 x -- xmobar on monitor 2
+                      --  >> hPutStrLn xmproc2 x, -- xmobar on monitor 3
                     ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>", -- Current workspace
                     ppVisible = xmobarColor "#c792ea" "" . clickable, -- Visible but not current workspace
                     ppHidden = xmobarColor "#82AAFF" "" . wrap "<box type=Top width=2 mt=2 color=#82AAFF>" "</box>" . clickable, -- Hidden workspaces
