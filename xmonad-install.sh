@@ -10,12 +10,16 @@ git clone https://github.com/pvdinh089/dotfiles
 
 sleep 5
 cd dotfiles
+cp -r .config $HOME
+cp -r .xmonad $HOME
+xmonad --recompile
+
+cd $HOME
+
 # Set Keyboard
-
-
 echo "setxkbmap us &" >> $HOME/.xprofile
 
-# Set hinh nen
+# Set Wallpaper
 echo "~/.config/wallpaper/fehbg &" >> $HOME/.xprofile
 
 # Hieu ung
