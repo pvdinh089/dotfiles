@@ -4,7 +4,7 @@
 sudo pacman -Syyu --noconfirm
 
 # Cài đặt các gói của xmonad
-sudo pacman -S --noconfirm xorg ligthdm lightdm-gtk-greeter xmonad xmonad-contrib xmobar dmenu picom feh otf-font-awesome
+sudo pacman -S --noconfirm xorg lightdm lightdm-gtk-greeter xmonad xmonad-contrib xmobar dmenu picom feh otf-font-awesome
 
 sleep 5
 # Kích hoạt dịch vụ quản lý Desktop
