@@ -2,7 +2,7 @@
 -- Dependencies: otf-font-awesome ttf-mononoki ttf-ubuntu-font-family trayer
 -- Also depends on scripts from dtos-local-bin from the dtos-core-repo.
 
-Config { font            = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=true"
+Config { font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:antialias=true:hinting=true"
        , additionalFonts = [ "xft:Mononoki:pixelsize=11:antialias=true:hinting=true"
                            , "xft:Font Awesome 5 Free Solid:pixelsize=12"
                            , "xft:Font Awesome 5 Brands:pixelsize=12"
@@ -14,33 +14,60 @@ Config { font            = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:h
        --   an integer for the percentage width, so 100 would be 100%.
        --   an integer for the minimum pixel height for xmobar, so 24 would force a height of at least 24 pixels.
        --   NOTE: The height should be the same as the trayer (system tray) height.
-       , position       = TopSize L 100 24
+       , position     = TopSize C 100 25
        , lowerOnStart = True
        , hideOnStart  = False
        , allDesktops  = True
-       , persistent   = True
-	, alpha = 50 
-       , iconRoot     = ".xmonad/xpm/"  -- default: "."
+       , persistent  = True
+       , alpha = 80 
+       , iconRoot     = ".config/xmobar/icons"  -- default: "."
        , commands = [
                         -- Cpu usage in percent
-                    Run Cpu ["-t", "<fn=2>\xf108</fn> <total>%","-H","50","--high","red"] 20
+                    Run Cpu ["-t"
+                            , "<fc=#ecbe7b><fn=2>\xf108</fn> <total>%</fc>"
+                            , "-H","50"
+                            , "--high","red"
+                            ] 20
 
                         -- Ram used number and percent
-                    , Run Memory ["-t", "<fn=2> \62776</fn> <used>M (<usedratio>%)"] 20
-                        -- Disk space free
-                    , Run DiskU [("/", "<fn=2> \xf0c7</fn> <free> free")] [] 60
+                    , Run Memory ["-t"
+                            , "<fc=#ff6c6b><fn=2> \62776</fn> <used>M (<usedratio>%)</fc> "
+                            ] 20
+                    
+                            -- Network
+                    , Run DynNetwork [ "--t" , "<fc=#8abeb7><fn=2>\xf6ff</fn> <tx>kB/s|<rx>kB/s</fc>"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 5
 
-                        -- Echos an "up arrow" icon in front of the uptime output.
-                    , Run Com "echo" ["<fn=2>\xf0aa</fn>"] "uparrow" 3600
+                        -- Disk space free
+                    , Run DiskU [("/"
+                            , "<fc=#a9a1e1><fn=2> \xf0c7</fn> <free> free</fc>")
+                            ] [] 60
+
                         -- Uptime
-                    , Run Uptime ["-t", "<days>d <hours>h"] 360
+                    , Run Uptime ["-t"
+                            , "<fc=#98be65> <fn=2>\xf0aa </fn><days>d <hours>h</fc>"
+                            ] 360
 
                         -- Time and date
-                    , Run Date "<fn=2> \xf017</fn> %H:%M - %b %d %Y   " "date" 50
+                    , Run Date "<fc=#46d9ff><fn=2> \61555</fn> %H:%M - %b %d %Y</fc>" "date" 59
+
+                        -- Power icon
+                    , Run Com "echo" ["<fc=#f0c674><fn=2> \61457 </fn></fc>"] "btnpower" 3600
+
+                        -- Start icon
+                    , Run Com "echo" ["<fc=#5E8D87><action=` dmenu_run -nf green -sb gray -sf black -p start`><fn=2> \xf00a</fn> Start <fn=2>\xf0da  </fn></action></fc>"] "starticon" 3600
 
                     , Run UnsafeStdinReader
-                    ]
+
+                    ] -- END COMMANDS
+
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell_20.xpm/> <fc=#666666>|</fc> %UnsafeStdinReader% }{ <fc=#ecbe7b><action=`terminator -e htop`>%cpu%</action></fc> <fc=#ff6c6b><action=`terminator -e htop`>%memory%</action></fc> <fc=#a9a1e1><action=`terminator -e htop`>%disku%</action></fc>  <fc=#98be65> %uparrow% <action=`terminator -e htop`>%uptime%</action></fc> <fc=#46d9ff>%date%</fc>"
+       , template =" %starticon% %UnsafeStdinReader% }{%cpu% %memory% %dynnetwork% %disku% %uptime% %date% %btnpower% "
        }
+-- 
