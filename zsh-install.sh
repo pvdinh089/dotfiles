@@ -12,7 +12,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 cp -r .zshrc ~
 
 # Cài đặt paru
-sudo pacman -S --needed base-devel
+sudo pacman -S --needed --noconfirm base-devel
 git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
