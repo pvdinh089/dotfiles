@@ -1,7 +1,2 @@
 #!/bin/sh
-
-# Hinh nen co dinh
-feh --bg-fill $HOME/.config/wallpaper/img/arch.jpg
-
-# Hinh nen ngau nhien
-#feh --bg-fill --no-fehbg --randomize $HOME/.config/wallpaper/img/* 
+feh --bg-fill $HOME/.config/wallpaper/img/arch.png
