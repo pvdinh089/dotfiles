@@ -23,44 +23,71 @@ Config { font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:a
        , iconRoot     = ".config/xmobar/icons"  -- default: "."
        , commands = [
                         -- Cpu usage in percent
-                    Run Cpu ["-t"
+                    Run Cpu [
+                            "-t"
                             , "<fc=#ecbe7b><fn=2>\xf108</fn> <total>%</fc>"
                             , "-H","50"
                             , "--high","red"
                             ] 20
 
                         -- Ram used number and percent
-                    , Run Memory ["-t"
+                    , Run Memory [
+                            "-t"
                             , "<fc=#ff6c6b><fn=2> \62776</fn> <used>M (<usedratio>%)</fc> "
                             ] 20
                     
                             -- Network
-                    , Run DynNetwork [ "--t" , "<fc=#8abeb7><fn=2>\xf6ff</fn> <tx>kB/s|<rx>kB/s</fc>"
-                             , "--Low"      , "1000"       -- units: B/s
-                             , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                             ] 5
+                    , Run DynNetwork [ 
+                            "-t" 
+                            , "<fc=#8abeb7><fn=2>\xf063</fn> <rx> kB/s </fc> <fc=#CC6666><fn=2>\xf062</fn> <tx> kB/s</fc>"
+                            , "--Low"      , "1000"       -- units: B/s
+                            , "--High"     , "5000"       -- units: B/s
+                            , "--low"      , "darkgreen"
+                            , "--normal"   , "darkorange"
+                             --, "--high"     , "darkred"
+                            ] 5
 
                         -- Disk space free
-                    , Run DiskU [("/"
+                    , Run DiskU [(
+                            "/"
                             , "<fc=#a9a1e1><fn=2> \xf0c7</fn> <free> free</fc>")
                             ] [] 60
 
                         -- Uptime
-                    , Run Uptime ["-t"
-                            , "<fc=#98be65> <fn=2>\xf0aa </fn><days>d <hours>h</fc>"
+                    , Run Uptime [
+                            "-t"
+                            , "<fc=#98be65> <fn=2>\xf0e7 </fn><days>d <hours>h</fc>"
                             ] 360
-
+  
                         -- Time and date
                     , Run Date "<fc=#46d9ff><fn=2> \61555</fn> %H:%M - %b %d %Y</fc>" "date" 59
 
+                        -- Volume
+                    , Run Volume "default" "Master" [
+                    
+                            --"-t", "<volumeipat>"
+                            --,"--volume-icon-pattern","<icon=haskell_20.xpm/>"
+                            --,"<fc=#B294BB>Vol: <action=`amixer set Master mute`><status></action>[<action=`amixer set Master 1- unmute`><fn=2>\xf027 </fn></action><volume><action=`amixer set Master 1+ unmute`><fn=2> \xf028</fn></action>]</fc>"
+                            "-t", "<status> <action=`amixer set Master 1- unmute`><fc=#A54242><fn=2>\xf3be</fn></fc></action><volume>%<action=`amixer set Master 1+ unmute`><fc=#98be65><fn=2>\xf3bf</fn></fc></action> ",
+                            "--",
+                                --Icon When mute 
+                            "-o", "<action=`amixer set Master unmute`><fn=2>\xf6a9</fn></action>",
+                                
+                                --Icon When on
+                            "-O", "<action=`amixer set Master mute`><fn=2>\xf028</fn></action>",
+                                
+                                --Color When of
+                            "-c", "#A54242",
+                                
+                                --Color When on
+                            "-C", "#B294BB"
+                            ] 1
+
                         -- Power icon
-                    , Run Com "echo" ["<fc=#f0c674><fn=2> \61457 </fn></fc>"] "btnpower" 3600
+                    , Run Com "echo" ["<action=` shutdown -h now`><fc=#f0c674><fn=2> \61457 </fn></fc></action>"] "btnpower" 3600
 
                         -- Start icon
-                    , Run Com "echo" ["<fc=#5E8D87><action=` dmenu_run -nf green -sb gray -sf black -p start`><fn=2> \xf00a</fn> Start <fn=2>\xf0da  </fn></action></fc>"] "starticon" 3600
+                    , Run Com "echo" ["<fc=#F0C674><action=` dmenu_run -nf green -sb gray -sf black -p start`><fn=2> \xf00a</fn> Start <fn=2>\xf0da  </fn></action></fc>"] "starticon" 3600
 
                     , Run UnsafeStdinReader
 
@@ -68,6 +95,6 @@ Config { font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:a
 
        , sepChar = "%"
        , alignSep = "}{"
-       , template =" %starticon% %UnsafeStdinReader% }{%cpu% %memory% %dynnetwork% %disku% %uptime% %date% %btnpower% "
+       , template ="%starticon% %UnsafeStdinReader% }{%cpu% %memory% %dynnetwork% %disku% %uptime% %date%  %default:Master% %btnpower%  "
        }
 -- 
