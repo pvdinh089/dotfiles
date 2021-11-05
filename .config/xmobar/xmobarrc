@@ -1,26 +1,21 @@
--- Xmobar (http://projects.haskell.org/xmobar/)
--- Dependencies: otf-font-awesome ttf-mononoki ttf-ubuntu-font-family trayer
--- Also depends on scripts from dtos-local-bin from the dtos-core-repo.
-
-Config { font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:antialias=true:hinting=true"
+Config { 
+        font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:antialias=true:hinting=true"
        , additionalFonts = [ "xft:Mononoki:pixelsize=11:antialias=true:hinting=true"
                            , "xft:Font Awesome 5 Free Solid:pixelsize=12"
                            , "xft:Font Awesome 5 Brands:pixelsize=12"
                            ]
-       , bgColor      = "#282c34"
-       , fgColor      = "#ff6c6b"
-       -- Position TopSize and BottomSize take 3 arguments:
-       --   an alignment parameter (L/R/C) for Left, Right or Center.
-       --   an integer for the percentage width, so 100 would be 100%.
-       --   an integer for the minimum pixel height for xmobar, so 24 would force a height of at least 24 pixels.
-       --   NOTE: The height should be the same as the trayer (system tray) height.
-       , position     = TopSize C 100 25
-       , lowerOnStart = True
-       , hideOnStart  = False
-       , allDesktops  = True
-       , persistent  = True
-       , alpha = 80 
-       , iconRoot     = ".config/xmobar/icons"  -- default: "."
+       , bgColor        = "#282A2E" --"#282c34"
+       , fgColor        = "#ff6c6b"
+       , position       = Static { xpos = 15 , ypos = 10, width =1890, height = 30 }--TopSize C 99 25
+       , border         = FullBM 1
+       , borderColor    = "#F0C674"  -- C5C8C6
+       , borderWidth    = 1
+       , lowerOnStart   = True
+       , hideOnStart    = False
+       , allDesktops    = True
+       , persistent     = True
+       , alpha          = 80 -- 0  -> 255 do trong suot
+       , iconRoot       = ".config/xmobar/icons"  -- default: "."
        , commands = [
                         -- Cpu usage in percent
                     Run Cpu [
@@ -64,10 +59,6 @@ Config { font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:a
 
                         -- Volume
                     , Run Volume "default" "Master" [
-                    
-                            --"-t", "<volumeipat>"
-                            --,"--volume-icon-pattern","<icon=haskell_20.xpm/>"
-                            --,"<fc=#B294BB>Vol: <action=`amixer set Master mute`><status></action>[<action=`amixer set Master 1- unmute`><fn=2>\xf027 </fn></action><volume><action=`amixer set Master 1+ unmute`><fn=2> \xf028</fn></action>]</fc>"
                             "-t", "<status> <action=`amixer set Master 1- unmute`><fc=#A54242><fn=2>\xf3be</fn></fc></action><volume>%<action=`amixer set Master 1+ unmute`><fc=#98be65><fn=2>\xf3bf</fn></fc></action> ",
                             "--",
                                 --Icon When mute 
@@ -83,18 +74,21 @@ Config { font            = "xft:DejaVu Sans Condensed:weight=bold:pixelsize=11:a
                             "-C", "#B294BB"
                             ] 1
 
+                        --- Show CAPS LOCK information  
+                    , Run Locks
+
                         -- Power icon
                     , Run Com "echo" ["<action=` shutdown -h now`><fc=#f0c674><fn=2> \61457 </fn></fc></action>"] "btnpower" 3600
 
                         -- Start icon
-                    , Run Com "echo" ["<fc=#F0C674><action=` dmenu_run -nf green -sb gray -sf black -p start`><fn=2> \xf00a</fn> Start <fn=2>\xf0da  </fn></action></fc>"] "starticon" 3600
+                    , Run Com "echo" ["<fc=#F0C674><action=` dmenu_run -nf green -sb gray -sf black -p start`><fn=2> \xf00a</fn> Start <fn=2>\xf0da </fn></action></fc>"] "starticon" 3600
 
                     , Run UnsafeStdinReader
 
                     ] -- END COMMANDS
-
+    
        , sepChar = "%"
        , alignSep = "}{"
-       , template ="%starticon% %UnsafeStdinReader% }{%cpu% %memory% %dynnetwork% %disku% %uptime% %date%  %default:Master% %btnpower%  "
+       , template ="%starticon% %UnsafeStdinReader%}{%locks%   %cpu% %memory% %dynnetwork% %disku% %uptime% %date%  %default:Master% %btnpower%  "
        }
 -- 
