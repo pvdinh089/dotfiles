@@ -59,13 +59,13 @@ Config {
 
                         -- Volume
                     , Run Volume "default" "Master" [
-                            "-t", "<status> <action=`amixer -q sset Master 1%-`><fc=#A54242><fn=2>\xf3be</fn></fc></action><volume>%<action=`amixer -q sset Master 1%+`><fc=#98be65><fn=2>\xf3bf</fn></fc></action> ",
+                            "-t", "<status> <action=`amixer -q sset Master 1%-`><fc=#A54242><fn=2>\xf3be</fn></fc></action><volume>%<action=`amixer set Master 1%+`><fc=#98be65><fn=2>\xf3bf</fn></fc></action> ",
                             "--",
                                 --Icon When mute 
-                            "-o", "<action=`amixer -q sset Master toggle`><fn=2>\xf6a9</fn></action>",
+                            "-o", "<action=`amixer set Master toggle`><fn=2>\xf6a9</fn></action>",
                                 
                                 --Icon When on
-                            "-O", "<action=`amixer -q sset Master toggle`><fn=2>\xf028</fn></action>",
+                            "-O", "<action=`amixer set Master toggle`><fn=2>\xf028</fn></action>",
                                 
                                 --Color When of
                             "-c", "#A54242",
